@@ -21,9 +21,10 @@ Aligning autonomous agents with human intent remains a central challenge in mode
 
 ## Hack-Verifiable TextArena
 
-We release **Hack-Verifiable TextArena**, a set of reward hacking environments built on top of [TextArena](https://github.com/). The forked code with all hack-verifiable environments is available here:
+We release **Hack-Verifiable TextArena**, a set of reward hacking environments built on top of [TextArena](https://github.com/). We provide both the original code that details the experiments in the paper, and the TextArena fork with all hack-verifiable environments:
 
-👉 **[Hack-Verifiable TextArena Code](https://github.com/)**
+- 📄 **[Experiments Code](https://github.com/)** — reproduces all experiments and results from the paper
+- 🔀 **[Hack-Verifiable TextArena Fork](https://github.com/)** — the TextArena fork with embedded reward hacking environments
 
 ---
 
