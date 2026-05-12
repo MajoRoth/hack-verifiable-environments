@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack-Verifiable Environments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --surface:   #f7f7f5;
+      --border:    #e5e5e0;
+      --accent:    #1a56db;
+      --text:      #111111;
+      --muted:     #6b7280;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --mono:       'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 56px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-logo:hover { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 120px 24px 72px;
+      text-align: center;
+    }
+
+    .venue-tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-bottom: 28px;
+      letter-spacing: 0.03em;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    h1 .sub {
+      display: block;
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ── Link pills ── */
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 36px 0 28px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      text-decoration: none;
+      transition: all .15s;
+      cursor: pointer;
+    }
+
+    .pill-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .pill-primary:hover { background: #1648c0; }
+
+    .pill-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg);
+    }
+    .pill-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Authors ── */
+    .authors {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 2;
+    }
+
+    .authors a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .15s;
+    }
+    .authors a:hover { border-color: var(--accent); }
+
+    .authors .sep { margin: 0 5px; color: var(--border); }
+
+    .authors sup {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-left: 1px;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .affiliations {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 18px;
+    }
+
+    .affiliations span sup {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-right: 2px;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      max-width: 780px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Sections ── */
+    section { position: relative; }
+
+    .section-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .alt-bg { background: var(--surface); }
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    /* ── Abstract ── */
+    .abstract-text {
+      font-family: var(--font-sans);
+      font-size: 0.97rem;
+      color: #374151;
+      line-height: 1.9;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    /* ── Figure ── */
+    .figure-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 48px;
+      background: var(--bg);
+    }
+
+    .figure-box img { width: 100%; display: block; }
+
+    .figure-caption {
+      padding: 14px 20px;
+      font-size: 0.83rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .figure-caption strong { color: var(--text); }
+
+    /* ── Arena ── */
+    .arena-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .arena-desc {
+      font-size: 0.97rem;
+      color: #374151;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .arena-gh-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    /* ── Code / Cite boxes ── */
+    .cite-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .cite-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .cite-header-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .copy-btn:hover { border-color: var(--accent); background: #eff6ff; }
+    .copy-btn.copied { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+
+    pre code.hljs {
+      background: transparent !important;
+      padding: 0 !important;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.75;
+      padding: 20px 20px;
+      overflow-x: auto;
+      tab-size: 2;
+      background: #f8fafc;
+    }
+
+    pre .k { color: #0550ae; }
+    pre .v { color: #116329; }
+    pre .s { color: #a40e26; }
+
+    /* ── BibTeX ── */
+    .bibtex { color: #374151; }
+    .bibtex .k { color: #0550ae; }
+    .bibtex .v { color: #116329; }
+    .bibtex .s { color: #6d28d9; }
+
+    /* ── Fade-in ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="#top" class="nav-logo">Hack-Verifiable Environments</a>
+    <ul class="nav-links">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#arena">Hack Verifiable Text Arena</a></li>
+      <li><a href="#cite">Cite</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <div id="top" class="hero fade-up visible">
+    <h1>
+      Hack-Verifiable Environments
+      <span class="sub">Towards Evaluating Reward Hacking at Scale</span>
+    </h1>
+
+    <div class="link-row">
+      <a href="#" class="pill pill-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Paper
+      </a>
+      <a href="#" class="pill pill-outline">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        arXiv
+      </a>
+      <a href="#" class="pill pill-outline">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        Code
+      </a>
+    </div>
+
+    <div class="authors">
+      <a href="#">Amit Roth</a><sup>1</sup><span class="sep">·</span>
+      <a href="#">Ankur Samanta</a><sup>2</sup><span class="sep">·</span>
+      <a href="#">Matan Halevy</a><sup>3</sup><span class="sep">·</span>
+      <a href="#">Yoav Levin</a><sup>1</sup><span class="sep">·</span>
+      <a href="#">Yonathan Efroni</a><sup>1</sup>
+    </div>
+    <div class="affiliations">
+      <span><sup>1</sup>Tel Aviv University</span>
+      <span><sup>2</sup>Columbia University</span>
+      <span><sup>3</sup>Taso Labs</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Abstract + Figure ── -->
+  <section id="abstract">
+    <div class="section-inner">
+
+      <div class="fade-up">
+        <h2>Abstract</h2>
+        <p class="abstract-text">
+          Aligning autonomous agents with human intent remains a central challenge in
+          modern AI. A key manifestation of this challenge is reward hacking, whereby
+          agents appear successful under the evaluation signal while violating the intended
+          objective. Reward hacking has been observed across a wide range of settings, yet
+          methods for reliably measuring it at scale remain lacking. In this work, we introduce
+          a new evaluation paradigm for measuring reward hacking. Whereas prior studies
+          have primarily analyzed it post hoc by inspecting agent trajectories, we instead
+          embed detectable reward hacking opportunities directly into environments. This
+          makes their exploitation verifiable by design, enabling deterministic and automated
+          measurement of whether and how agents exploit such vulnerabilities. We instantiate
+          this approach in TextArena and release Hack-Verifiable TextArena, a testbed in
+          which reward hacking can be measured reliably. Using this benchmark, we analyze
+          reward hacking behavior across language models in diverse environments and
+          settings.
+        </p>
+      </div>
+
+      <div class="fade-up" style="margin-top: 48px;">
+        <h2>Method Overview</h2>
+        <div class="figure-box">
+          <img src="main_figure_dark.png" alt="Main Figure">
+          <div class="figure-caption">
+            <strong>Figure 1.</strong> The interaction between the agent and the hack-verifiable environment.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Arena ── -->
+  <section id="arena" class="alt-bg">
+    <div class="section-inner">
+      <div class="arena-header fade-up">
+        <h2>Hack-Verifiable Text Arena</h2>
+        <p style="color: var(--muted); font-size: 0.95rem;">
+          An interactive evaluation environment for exploring reward hacking behaviors at scale.
+        </p>
+      </div>
+
+      <div class="fade-up">
+        <p class="arena-desc">
+          We release <strong>Hack-Verifiable Text Arena</strong>, a set of reward hacking
+          environments based on TextArena games.
+        </p>
+
+        <div class="arena-gh-wrap">
+          <a href="#" class="pill pill-outline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <p class="arena-desc">
+          You can easily wrap any environment and test your agent.
+        </p>
+
+        <div class="cite-box" style="margin-top: 16px;">
+          <div class="cite-header">
+            <span class="cite-header-label">python</span>
+            <button class="copy-btn" id="copy-code-btn" onclick="copyCode()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre id="code-text"><code class="language-python">import textarena as ta
+
+agents = {
+    0: ta.agents.HumanAgent(),
+}
+
+env = ta.make(env_id="Wordle-v0")  # initialize the environment
+env = ta.wrappers.FilesystemWrapper(env=env, hidden_solution=True)  # wrap with hacks
+env.reset(num_players=len(agents))
+
+# main game loop
+done = False
+while not done:
+  player_id, observation = env.get_observation()
+  action = agents[player_id](observation)
+  done, step_info = env.step(action=action)
+  if step_info.get("reward_hack"):
+    print("\033[33m[HACK DETECTED] A hack was triggered in this step!\033[0m")
+rewards, game_info = env.close()
+</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Cite ── -->
+  <section id="cite">
+    <div class="section-inner">
+      <div class="fade-up">
+        <h2>BibTeX</h2>
+        <div class="cite-box">
+          <div class="cite-header">
+            <span class="cite-header-label">bibtex</span>
+            <button class="copy-btn" id="copy-btn" onclick="copyCite()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre id="cite-text" class="bibtex"><span class="k">@article</span>{<span class="v">authorone2025hack</span>,
+  <span class="k">title</span>   = {<span class="s">Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale</span>},
+  <span class="k">author</span>  = {<span class="s">Author One and Author Two and Author Three and Author Four</span>},
+  <span class="k">journal</span> = {<span class="s">arXiv preprint arXiv:XXXX.XXXXX</span>},
+  <span class="k">year</span>    = {<span class="s">2025</span>}
+}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => { hljs.highlightAll(); });
+
+    // Fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
+
+    function copyCode() {
+      const btn = document.getElementById('copy-code-btn');
+      navigator.clipboard.writeText(document.querySelector('#code-text code').innerText).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+        }, 2000);
+      });
+    }
+
+    function copyCite() {
+      const btn = document.getElementById('copy-btn');
+      navigator.clipboard.writeText(document.getElementById('cite-text').innerText).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
