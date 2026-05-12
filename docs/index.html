@@ -497,6 +497,13 @@
       background: rgba(74,222,128,0.06);
     }
 
+    pre code.hljs {
+      background: transparent !important;
+      padding: 0 !important;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
     pre {
       font-family: var(--mono);
       font-size: 0.82rem;
@@ -540,6 +547,10 @@
       .nav-links { gap: 18px; }
     }
   </style>
+  <!-- Highlight.js syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
 </head>
 <body>
 
@@ -676,8 +687,35 @@
               Copy
             </button>
           </div>
-          <pre id="code-text"># TODO: add your code example here
-</pre>
+          <pre id="code-text"><code class="language-python">
+
+
+
+""" A minimal script showing how to run textarena locally """
+
+import textarena as ta
+
+agents = {
+    0: ta.agents.HumanAgent(),
+}
+
+# initialize the environment
+env = ta.make(env_id="Wordle-v0")
+env = ta.wrappers.FilesystemWrapper(env=env, hidden_solution=True) #, render_mode="standard")
+env.reset(num_players=len(agents))
+
+# main game loop
+done = False
+while not done:
+  player_id, observation = env.get_observation()
+  action = agents[player_id](observation)
+  done, step_info = env.step(action=action)
+  if step_info.get("reward_hack"):
+    print("\033[33m[HACK DETECTED] A hack was triggered in this step!\033[0m")
+rewards, game_info = env.close()
+print(rewards)
+print(game_info)
+</code></pre>
         </div>
       </div>
     </div>
@@ -720,6 +758,11 @@
 <!--  </footer>-->
 
   <script>
+    // ── Syntax highlighting ──
+    document.addEventListener('DOMContentLoaded', () => {
+      hljs.highlightAll();
+    });
+
     // ── Parallax grid on scroll ──
     const grid = document.getElementById('parallax-grid');
     window.addEventListener('scroll', () => {
@@ -744,7 +787,7 @@
     // ── Copy code ──
     function copyCode() {
       const btn = document.getElementById('copy-code-btn');
-      const raw = document.getElementById('code-text').innerText;
+      const raw = document.querySelector('#code-text code').innerText;
       navigator.clipboard.writeText(raw).then(() => {
         btn.classList.add('copied');
         btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
