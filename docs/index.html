@@ -3,22 +3,666 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verifiable Environments</title>
+  <title>Hack-Verifiable Environments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: sans-serif;
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 0 20px;
-      color: #333;
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #08090d;
+      --surface:   #0f1117;
+      --border:    rgba(255,255,255,0.07);
+      --accent:    #5eead4;       /* teal */
+      --accent2:   #818cf8;       /* indigo */
+      --accent3:   #f472b6;       /* pink */
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --glow:      0 0 40px rgba(94,234,212,0.15);
+      --font:      'Inter', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
     }
-    h1 { font-size: 2rem; }
-    p { line-height: 1.6; color: #555; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(8,9,13,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+    }
+
+    /* Parallax grid */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(94,234,212,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(94,234,212,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(600px) rotateX(10deg) scale(1.1);
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    /* Radial glow blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(94,234,212,0.12) 0%, transparent 70%);
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .blob-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(129,140,248,0.1) 0%, transparent 70%);
+      bottom: 0; right: 5%;
+    }
+    .blob-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(244,114,182,0.08) 0%, transparent 70%);
+      bottom: 100px; left: 5%;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 860px; }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(94,234,212,0.3);
+      border-radius: 100px;
+      padding: 6px 18px;
+      margin-bottom: 32px;
+      background: rgba(94,234,212,0.05);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    h1 .accent { color: var(--accent); }
+    h1 .sub {
+      display: block;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0em;
+    }
+
+    /* ── Link pills ── */
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s;
+      cursor: pointer;
+    }
+
+    .pill-primary {
+      background: var(--accent);
+      color: #08090d;
+    }
+    .pill-primary:hover {
+      background: #99f6e4;
+      box-shadow: 0 0 24px rgba(94,234,212,0.4);
+    }
+
+    .pill-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+    .pill-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(94,234,212,0.05);
+    }
+
+    /* ── Authors ── */
+    .authors {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .authors a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+      transition: color .2s, border-color .2s;
+      padding-bottom: 1px;
+    }
+
+    .authors a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .authors .sep { margin: 0 6px; color: var(--border); }
+
+    .affiliation {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── Sections ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.2;
+    }
+
+    /* ── Abstract card ── */
+    .abstract-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 48px;
+      font-size: 1rem;
+      color: #94a3b8;
+      line-height: 1.9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .abstract-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    }
+
+    /* ── Main figure ── */
+    .figure-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .figure-placeholder {
+      width: 100%;
+      aspect-ratio: 16/7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.01),
+        rgba(255,255,255,0.01) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+      color: var(--muted);
+    }
+
+    .figure-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+    }
+
+    .figure-caption {
+      padding: 20px 28px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .figure-caption strong { color: var(--text); }
+
+    /* ── Arena section ── */
+    .arena-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .arena-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .arena-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .arena-placeholder {
+      min-height: 300px;
+      border: 1px dashed rgba(129,140,248,0.2);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(129,140,248,0.02);
+    }
+
+    .arena-placeholder-text {
+      text-align: center;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    /* ── Cite section ── */
+    .cite-box {
+      background: #0a0b10;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .cite-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .cite-header-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(94,234,212,0.06);
+      border: 1px solid rgba(94,234,212,0.2);
+      border-radius: 6px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .copy-btn:hover {
+      background: rgba(94,234,212,0.12);
+      border-color: rgba(94,234,212,0.4);
+    }
+    .copy-btn.copied {
+      color: #4ade80;
+      border-color: rgba(74,222,128,0.4);
+      background: rgba(74,222,128,0.06);
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      padding: 24px 24px;
+      color: #94a3b8;
+      overflow-x: auto;
+      tab-size: 2;
+    }
+
+    pre .k { color: var(--accent2); }
+    pre .v { color: var(--accent); }
+    pre .s { color: #f472b6; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    /* ── Fade-in animation ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .abstract-card { padding: 28px 24px; }
+      .nav-links { gap: 18px; }
+    }
   </style>
 </head>
 <body>
-  <h1>Verifiable Environments</h1>
-  <p>This is a placeholder page for the <strong>hack-verifiable-environments</strong> project.</p>
-  <p>GitHub Pages is working correctly.</p>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <span class="nav-logo">HVE</span>
+    <ul class="nav-links">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#arena">Arena</a></li>
+      <li><a href="#cite">Cite</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="top">
+    <div class="hero-grid" id="parallax-grid"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="hero-content fade-up visible">
+      <div class="hero-badge">Research Paper · 2025</div>
+
+      <h1>
+        <span class="accent">Hack-Verifiable</span> Environments
+        <span class="sub">Towards Evaluating Reward Hacking at Scale</span>
+      </h1>
+
+      <!-- Resource links -->
+      <div class="link-row">
+        <a href="#" class="pill pill-primary">
+          <!-- paper icon -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Paper
+        </a>
+        <a href="#" class="pill pill-outline">
+          <!-- arxiv -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          arXiv
+        </a>
+        <a href="#" class="pill pill-outline">
+          <!-- github -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Code
+        </a>
+      </div>
+
+      <!-- Authors -->
+      <div class="authors">
+        <a href="#">Author One</a><span class="sep">·</span>
+        <a href="#">Author Two</a><span class="sep">·</span>
+        <a href="#">Author Three</a><span class="sep">·</span>
+        <a href="#">Author Four</a>
+      </div>
+      <div class="affiliation">Institution Name &nbsp;·&nbsp; Year</div>
+    </div>
+  </section>
+
+  <!-- ── Abstract + Figure ── -->
+  <section id="abstract">
+    <div class="section-inner">
+
+      <div class="fade-up">
+        <p class="section-label">01 — Abstract</p>
+        <h2>Overview</h2>
+        <div class="abstract-card">
+          <!-- Replace this placeholder text with your abstract -->
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+          deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error
+          sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae
+          ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+        </div>
+      </div>
+
+      <div class="fade-up" style="margin-top: 64px;">
+        <p class="section-label">02 — Main Figure</p>
+        <h2>Method Overview</h2>
+        <div class="figure-box">
+          <div class="figure-placeholder">
+            <div class="figure-icon">⬜</div>
+            <span style="font-size:0.85rem;">Main figure — replace with your image</span>
+            <span style="font-size:0.75rem; font-family: var(--mono); opacity:.5;">e.g. &lt;img src="figure.png" /&gt;</span>
+          </div>
+          <div class="figure-caption">
+            <strong>Figure 1.</strong> Caption goes here. Describe the key takeaway from this figure in one or two sentences.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Arena ── -->
+  <section id="arena" class="arena-section">
+    <div class="arena-inner">
+      <div class="arena-header fade-up">
+        <p class="section-label">03 — Interactive Demo</p>
+        <h2>Hack-Verifiable Text Arena</h2>
+        <p style="color: var(--muted); max-width:560px; font-size:0.95rem;">
+          An interactive evaluation environment for exploring reward hacking behaviors at scale.
+        </p>
+      </div>
+
+      <div class="arena-placeholder fade-up">
+        <div class="arena-placeholder-text">
+          <div style="font-size:1.8rem; margin-bottom:12px; opacity:.3;">⬡</div>
+          Arena content coming soon
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Cite ── -->
+  <section id="cite">
+    <div class="section-inner">
+      <div class="fade-up">
+        <p class="section-label">04 — Citation</p>
+        <h2>BibTeX</h2>
+
+        <div class="cite-box">
+          <div class="cite-header">
+            <span class="cite-header-label">bibtex</span>
+            <button class="copy-btn" id="copy-btn" onclick="copyCite()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre id="cite-text"><span class="k">@article</span>{<span class="v">authorone2025hack</span>,
+  <span class="k">title</span>   = {<span class="s">Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale</span>},
+  <span class="k">author</span>  = {<span class="s">Author One and Author Two and Author Three and Author Four</span>},
+  <span class="k">journal</span> = {<span class="s">arXiv preprint arXiv:XXXX.XXXXX</span>},
+  <span class="k">year</span>    = {<span class="s">2025</span>}
+}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>
+      This page was built using a template inspired by
+      <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.
+    </p>
+  </footer>
+
+  <script>
+    // ── Parallax grid on scroll ──
+    const grid = document.getElementById('parallax-grid');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      grid.style.transform = `perspective(600px) rotateX(10deg) scale(1.1) translateY(${y * 0.15}px)`;
+    }, { passive: true });
+
+    // ── Fade-in on scroll ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
+
+    // ── Copy cite ──
+    function copyCite() {
+      const btn = document.getElementById('copy-btn');
+      const raw = document.getElementById('cite-text').innerText;
+      navigator.clipboard.writeText(raw).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
