@@ -138,24 +138,25 @@
       font-weight: 500;
       font-family: var(--font-sans);
       text-decoration: none;
-      transition: all .15s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
 
-    .pill-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-    .pill-primary:hover { background: #1648c0; }
-
+    .pill-primary,
     .pill-outline {
-      border: 1px solid var(--border);
-      color: var(--text);
-      background: var(--bg);
+      background: #1e293b;
+      color: #ffffff;
+      border: 1.5px solid #1e293b;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
     }
+    .pill-primary:hover,
     .pill-outline:hover {
+      background: var(--accent);
       border-color: var(--accent);
-      color: var(--accent);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgb(26 86 219 / 0.25);
     }
 
     /* ── Authors ── */
@@ -317,7 +318,7 @@
       border-radius: 4px;
       padding: 4px 10px;
       cursor: pointer;
-      transition: all .15s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .copy-btn:hover { border-color: var(--accent); background: #eff6ff; }
     .copy-btn.copied { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
