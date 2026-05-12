@@ -4,7 +4,7 @@
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](https://arxiv.org/)
 [![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b)](https://arxiv.org/)
 [![Webpage](https://img.shields.io/badge/Webpage-Online-blue)](https://majoroth.github.io/hack-verifiable-environments/)
-[![Hack-Verifiable TextArena](https://img.shields.io/badge/TextArena-Code-green)](https://github.com/)
+[![Hack-Verifiable TextArena](https://img.shields.io/badge/Hack--Verifiable%20TextArena-Code-green)](https://github.com/)
 
 ---
 
