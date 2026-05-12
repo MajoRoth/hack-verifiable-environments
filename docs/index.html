@@ -72,7 +72,10 @@
       text-transform: uppercase;
       color: var(--accent);
       font-family: var(--mono);
+      text-decoration: none;
+      transition: opacity .2s;
     }
+    .nav-logo:hover { opacity: 0.75; }
 
     .nav-links {
       display: flex;
@@ -479,10 +482,10 @@
 
   <!-- ── Nav ── -->
   <nav>
-    <span class="nav-logo">HVE</span>
+    <a href="#top" class="nav-logo">Hack-Verifiable Environments</a>
     <ul class="nav-links">
       <li><a href="#abstract">Abstract</a></li>
-      <li><a href="#arena">Arena</a></li>
+      <li><a href="#arena">Hack Verifiable Text Arena</a></li>
       <li><a href="#cite">Cite</a></li>
     </ul>
   </nav>
