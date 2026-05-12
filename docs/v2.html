@@ -449,7 +449,7 @@
       <div class="fade-up" style="margin-top: 48px;">
         <h2>Method Overview</h2>
         <div class="figure-box">
-          <img src="main_figure.png" alt="Main Figure">
+          <img src="main_figure_no_border.png" alt="Main Figure">
           <div class="figure-caption">
             <strong>Figure 1.</strong> The interaction between the agent and the hack-verifiable environment.
           </div>
@@ -472,11 +472,6 @@
       </div>
 
       <div class="fade-up">
-        <p class="arena-desc">
-          We release <strong>Hack-Verifiable Text Arena</strong>, a set of reward hacking
-          environments based on TextArena games.
-        </p>
-
         <div class="arena-gh-wrap">
           <a href="#" class="pill pill-outline">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
@@ -513,7 +508,7 @@ while not done:
   action = agents[player_id](observation)
   done, step_info = env.step(action=action)
   if step_info.get("reward_hack"):
-    print("\033[33m[HACK DETECTED] A hack was triggered in this step!\033[0m")
+    print("[HACK DETECTED] A hack was triggered in this step!")
 rewards, game_info = env.close()
 </code></pre>
         </div>
