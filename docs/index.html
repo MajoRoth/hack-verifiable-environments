@@ -241,6 +241,32 @@
 
     .authors .sep { margin: 0 6px; color: var(--border); }
 
+    .authors sup {
+      font-size: 0.6rem;
+      color: var(--accent);
+      margin-left: 1px;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .affiliations {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 20px;
+    }
+
+    .affiliations span sup {
+      font-size: 0.6rem;
+      color: var(--accent);
+      margin-right: 2px;
+      vertical-align: super;
+      line-height: 0;
+    }
+
     .affiliation {
       font-size: 0.78rem;
       color: var(--muted);
@@ -530,11 +556,16 @@
 
       <!-- Authors -->
       <div class="authors">
-        <a href="#">Amit Roth</a><span class="sep">·</span>
-        <a href="#">Ankur Samanta</a><span class="sep">·</span>
-        <a href="#">Matan Halevy</a><span class="sep">·</span>
-        <a href="#">Yoav Levin</a><span class="sep">·</span>
-        <a href="#">Yonathan Efroni</a>
+        <a href="#">Amit Roth</a><sup>1</sup><span class="sep">·</span>
+        <a href="#">Ankur Samanta</a><sup>2</sup><span class="sep">·</span>
+        <a href="#">Matan Halevy</a><sup>3</sup><span class="sep">·</span>
+        <a href="#">Yoav Levin</a><sup>1</sup><span class="sep">·</span>
+        <a href="#">Yonathan Efroni</a><sup>1</sup>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>Tel Aviv University</span>
+        <span><sup>2</sup>Columbia University</span>
+        <span><sup>3</sup>Taso Labs</span>
       </div>
     </div>
   </section>
@@ -630,12 +661,12 @@
   </section>
 
   <!-- ── Footer ── -->
-  <footer>
-    <p>
-      This page was built using a template inspired by
-      <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.
-    </p>
-  </footer>
+<!--  <footer>-->
+<!--    <p>-->
+<!--      This page was built using a template inspired by-->
+<!--      <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.-->
+<!--    </p>-->
+<!--  </footer>-->
 
   <script>
     // ── Parallax grid on scroll ──
