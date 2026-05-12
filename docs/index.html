@@ -398,6 +398,25 @@
       margin-bottom: 60px;
     }
 
+    .arena-body {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .arena-desc {
+      font-size: 1rem;
+      color: #94a3b8;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .arena-desc strong { color: var(--text); }
+
+    .arena-gh-btn {
+      font-size: 0.9rem;
+      padding: 11px 26px;
+    }
+
     .arena-placeholder {
       min-height: 300px;
       border: 1px dashed rgba(129,140,248,0.2);
@@ -623,10 +642,32 @@
         </p>
       </div>
 
-      <div class="arena-placeholder fade-up">
-        <div class="arena-placeholder-text">
-          <div style="font-size:1.8rem; margin-bottom:12px; opacity:.3;">⬡</div>
-          Arena content coming soon
+      <div class="arena-body fade-up">
+        <p class="arena-desc">
+          We release <strong>Hack-Verifiable Text Arena</strong>, a set of reward hacking
+          environments based on TextArena games.
+        </p>
+
+        <a href="#" class="pill pill-outline arena-gh-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+
+        <p class="arena-desc" style="margin-top: 32px;">
+          You can easily wrap any environment and test your agent.
+        </p>
+
+        <!-- Python code block -->
+        <div class="cite-box" style="margin-top: 20px;">
+          <div class="cite-header">
+            <span class="cite-header-label">python</span>
+            <button class="copy-btn" id="copy-code-btn" onclick="copyCode()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre id="code-text"># TODO: add your code example here
+</pre>
         </div>
       </div>
     </div>
@@ -689,6 +730,20 @@
     document.querySelectorAll('.fade-up').forEach(el => {
       if (!el.classList.contains('visible')) observer.observe(el);
     });
+
+    // ── Copy code ──
+    function copyCode() {
+      const btn = document.getElementById('copy-code-btn');
+      const raw = document.getElementById('code-text').innerText;
+      navigator.clipboard.writeText(raw).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+        }, 2000);
+      });
+    }
 
     // ── Copy cite ──
     function copyCite() {
