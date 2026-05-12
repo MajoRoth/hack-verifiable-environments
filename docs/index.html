@@ -523,14 +523,14 @@
               Copy
             </button>
           </div>
-          <pre id="code-text"><code class="language-python">import textarena as ta
+          <pre id="code-text"><code class="language-python">import textarena as hvta
 
 agents = {
-    0: ta.agents.HumanAgent(),
+    0: hvta.agents.HumanAgent(),
 }
 
-env = ta.make(env_id="Wordle-v0")  # initialize the environment
-env = ta.wrappers.FilesystemWrapper(env=env, hidden_solution=True)  # wrap with hacks
+env = hvta.make(env_id="Wordle-v0")  # initialize the environment
+env = hvta.wrappers.FilesystemWrapper(env=env, hidden_solution=True)  # wrap with hacks
 env.reset(num_players=len(agents))
 
 # main game loop
