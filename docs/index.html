@@ -379,6 +379,12 @@
     }
 
     .arena-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cite-section {
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
@@ -635,7 +641,7 @@
   <section id="arena" class="arena-section">
     <div class="arena-inner">
       <div class="arena-header fade-up">
-        <p class="section-label">03 — Interactive Demo</p>
+<!--        <p class="section-label">03 — Interactive Demo</p>-->
         <h2>Hack-Verifiable Text Arena</h2>
         <p style="color: var(--muted); max-width:560px; font-size:0.95rem;">
           An interactive evaluation environment for exploring reward hacking behaviors at scale.
@@ -643,10 +649,6 @@
       </div>
 
       <div class="arena-body fade-up">
-        <p class="arena-desc">
-          We release <strong>Hack-Verifiable Text Arena</strong>, a set of reward hacking
-          environments based on TextArena games.
-        </p>
 
         <a href="#" class="pill pill-outline arena-gh-btn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
@@ -676,7 +678,7 @@
   <div class="divider"></div>
 
   <!-- ── Cite ── -->
-  <section id="cite">
+  <section id="cite" class="cite-section">
     <div class="section-inner">
       <div class="fade-up">
         <p class="section-label">04 — Citation</p>
