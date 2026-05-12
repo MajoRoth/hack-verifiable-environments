@@ -1,6 +1,5 @@
 # Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale
 
-**Official repository for the paper.**
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](https://arxiv.org/)
 [![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b)](https://arxiv.org/)
@@ -9,11 +8,11 @@
 
 ---
 
-## Abstract
+## Introduction
 
-Aligning autonomous agents with human intent remains a central challenge in modern AI. A key manifestation of this challenge is reward hacking, whereby agents appear successful under the evaluation signal while violating the intended objective. Reward hacking has been observed across a wide range of settings, yet methods for reliably measuring it at scale remain lacking. In this work, we introduce a new evaluation paradigm for measuring reward hacking. Whereas prior studies have primarily analyzed it post hoc by inspecting agent trajectories, we instead embed detectable reward hacking opportunities directly into environments. This makes their exploitation verifiable by design, enabling deterministic and automated measurement of whether and how agents exploit such vulnerabilities. We instantiate this approach in TextArena and release Hack-Verifiable TextArena, a testbed in which reward hacking can be measured reliably. Using this benchmark, we analyze reward hacking behavior across language models in diverse environments and settings.
-
----
+Hack Verifiable Environments is a new paradigm for evaluating reward hacking.
+We provide in this directory the original code for the paper, with the experiment scripts to reproduce all results.
+We further release Hack-Verifiable TextArena, a fork of TextArena together with the filesystem wrapper, to evaluate reward hacking on TextArena environments.
 
 ![Main Figure](docs/main_figure_no_border.png)
 
@@ -21,10 +20,6 @@ Aligning autonomous agents with human intent remains a central challenge in mode
 
 ## Hack-Verifiable TextArena
 
-We release **Hack-Verifiable TextArena**, a set of reward hacking environments built on top of [TextArena](https://github.com/). We provide both the original code that details the experiments in the paper, and the TextArena fork with all hack-verifiable environments:
-
-- 📄 **[Experiments Code](https://github.com/)** — reproduces all experiments and results from the paper
-- 🔀 **[Hack-Verifiable TextArena Fork](https://github.com/)** — the TextArena fork with embedded reward hacking environments
 
 ---
 
