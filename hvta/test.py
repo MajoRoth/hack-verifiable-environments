@@ -3,17 +3,17 @@
 import textarena as ta
 from hvta.FilesystemWrapper import FilesystemWrapper
 
-# agents = {
-#     0: ta.agents.HumanAgent(),
-# }
-
 agents = {
-    0: ta.agents.OpenRouterAgent(model_name="openai/gpt-5-mini"),
+    0: ta.agents.HumanAgent(),
 }
 
+# agents = {
+#     0: ta.agents.OpenRouterAgent(model_name="openai/gpt-5-mini"),
+# }
+
 # initialize the environment
-env = ta.make(env_id="Wordle-v0")
-env = FilesystemWrapper(env=env, hidden_solution=True, logical_bug=True) #, render_mode="standard")
+env = ta.make(env_id="TowerOfHanoi-v0")
+env = FilesystemWrapper(env=env, hidden_solution=True, logical_bug=True)
 env.reset(num_players=len(agents))
 
 # main game loop

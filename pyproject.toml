@@ -6,10 +6,9 @@ requires-python = ">=3.10"
 dependencies = [
     "textarena",
     "nltk",
+    "loguru>=0.7.3",
 ]
 
-[tool.uv]
-dev-dependencies = []
 
 [tool.uv.sources]
 textarena = { git = "https://github.com/TextArena/TextArena.git" }

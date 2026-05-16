@@ -20,8 +20,9 @@ We also release Hack-Verifiable TextArena, a fork of TextArena with a filesystem
 
 ## Hack-Verifiable TextArena
 
-We release [Hack-Verifiable TextArena]().
-We implemented the filesystem wrapper with a hidden solution, a logical bug for single-player environments, and a read-and-write prompt for two-player environments.
+We release [Hack-Verifiable TextArena](https://github.com/MajoRoth/hack-verifiable-environments/hvta).
+We implemented the filesystem wrapper on top of [TextArena](https://github.com/TextArena/TextArena), which allows us to evaluate reward hacking in a wide range of text-based environments.
+We implemented hidden-solution and logical-bug for single-player environments, and read-and-write prompt for two-player environments.
 
 ---
 
