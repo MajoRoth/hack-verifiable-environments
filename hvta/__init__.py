@@ -1,4 +1,5 @@
 import textarena  # base TextArena package
 
-from hvta import wrappers
-from hvta import envs
+from hvta.FilesystemWrapper import FilesystemWrapper
+
+__all__ = ["FilesystemWrapper"]
