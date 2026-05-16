@@ -1,7 +1,7 @@
 [project]
 name = "hack-verifiable-environments"
 version = "0.1.0"
-description = "Hack-Verifiable Environments: reward hacking evaluation built on TextArena"
+description = "Hack-Verifiable Environments"
 requires-python = ">=3.10"
 dependencies = [
     "textarena",
@@ -10,3 +10,6 @@ dependencies = [
 
 [tool.uv]
 dev-dependencies = []
+
+[tool.uv.sources]
+textarena = { git = "https://github.com/TextArena/TextArena.git" }
