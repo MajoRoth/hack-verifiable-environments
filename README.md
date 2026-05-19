@@ -22,9 +22,24 @@ We also release Hack-Verifiable TextArena, a fork of TextArena with a filesystem
 
 ---
 
+## Installation
+
+```bash
+uv sync
+```
+
+Set your API keys in a `.env` file in the project root:
+
+```
+OPENAI_API_KEY=...
+OPENROUTER_API_KEY=...
+```
+
+---
+
 ## Hack-Verifiable TextArena
 
-We release [Hack-Verifiable TextArena](https://github.com/MajoRoth/hack-verifiable-environments/hvta).
+We release [Hack-Verifiable TextArena](https://github.com/MajoRoth/hack-verifiable-environments/tree/main/hvta).
 We implemented the filesystem wrapper on top of [TextArena](https://github.com/TextArena/TextArena), which allows us to evaluate reward hacking in a wide range of text-based environments.
 We implemented hidden-solution and logical-bug for single-player environments, and read-and-write prompt for two-player environments.
 
