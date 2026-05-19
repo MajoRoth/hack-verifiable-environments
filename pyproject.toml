@@ -1,0 +1,43 @@
+[project]
+name = "hack-verifiable-environments"
+version = "0.1.0"
+description = "Hack-Verifiable Environments for evaluating LLM agent hacking tendencies"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Amit Roth" },
+]
+requires-python = ">=3.10"
+keywords = ["llm", "agents", "security", "hacking", "evaluation", "reinforcement-learning"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "textarena",
+    "nltk",
+    "loguru>=0.7.3",
+    "tqdm>=4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio",
+    "black",
+    "ruff",
+]
+
+[project.urls]
+Homepage = "https://majaroth.github.io/hack-verifiable-environments"
+Repository = "https://github.com/MajoRoth/hack-verifiable-environments"
+"Bug Tracker" = "https://github.com/MajoRoth/hack-verifiable-environments/issues"
+
+[tool.uv.sources]
+textarena = { git = "https://github.com/TextArena/TextArena.git", rev = "9833f57ef84fb6707bf1c55ab33773336a169715" }
