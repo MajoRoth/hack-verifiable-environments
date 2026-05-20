@@ -4,7 +4,7 @@
   <a href="https://arxiv.org/">
     <img src="https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" height="40"/>
   </a>
-  &nbsp;&nbsp;
+  <span style="display:inline-block; width:16px;"></span>
   <a href="https://majoroth.github.io/hack-verifiable-environments/">
     <img src="https://img.shields.io/badge/Webpage-Online-blue?style=for-the-badge&logo=githubpages&logoColor=white" height="40"/>
   </a>
