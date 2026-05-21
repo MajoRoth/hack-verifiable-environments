@@ -1,8 +1,8 @@
 # Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale
 
 <p align="center">
-  <a href="https://arxiv.org/">
-    <img src="https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" height="40"/>
+  <a href="https://arxiv.org/abs/2605.20744">
+    <img src="https://img.shields.io/badge/arXiv-2605.20744-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" height="40"/>
   </a>
   <span style="display:inline-block; width:16px;"></span>
   <a href="https://majoroth.github.io/hack-verifiable-environments/">
