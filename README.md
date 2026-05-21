@@ -77,7 +77,7 @@ You can use the examples prvovided in `hvta/test_1p.py`, `hvta/test_2p.py` and `
 ## Citation
 
 ```bibtex
-@misc{roth2026hackverifiableenvironmentsevaluatingreward,
+@misc{roth202hve,
       title={Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale}, 
       author={Amit Roth and Ankur Samanta and Matan Halevy and Yoav Levine and Yonathan Efroni},
       year={2026},
