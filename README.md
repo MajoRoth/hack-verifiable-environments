@@ -15,7 +15,7 @@
 ## Introduction
 
 Hack-Verifiable Environments is a new paradigm for evaluating reward hacking.
-This repository contains the original code for the paper, including all experiment scripts needed to reproduce the results.
+This repository contains the original code for the paper, including experiment scripts needed to reproduce the results.
 We also release Hack-Verifiable TextArena, a fork of TextArena with a filesystem wrapper for evaluating reward hacking on TextArena environments.
 
 ![Demo](docs/video.gif)
