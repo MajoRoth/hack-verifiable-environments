@@ -73,13 +73,10 @@ You can use the examples prvovided in `hvta/test_1p.py`, `hvta/test_2p.py` and `
 ## Citation
 
 ```bibtex
-@article{roth202hve,
-      title={Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale}, 
-      author={Amit Roth and Ankur Samanta and Matan Halevy and Yoav Levine and Yonathan Efroni},
-      year={2026},
-      eprint={2605.20744},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2605.20744}, 
+@article{roth2026hack,
+  title={Hack-Verifiable Environments: Towards Evaluating Reward Hacking at Scale},
+  author={Roth, Amit and Samanta, Ankur and Halevy, Matan and Levine, Yoav and Efroni, Yonathan},
+  journal={arXiv preprint arXiv:2605.20744},
+  year={2026}
 }
 ```
