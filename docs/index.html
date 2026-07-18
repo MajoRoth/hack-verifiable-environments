@@ -227,7 +227,16 @@
       padding: 64px 24px;
     }
 
-    .alt-bg { background: var(--surface); }
+    .alt-bg {
+      background: var(--surface);
+    }
+
+    .alt-bg > .section-inner {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
     h2 {
       font-family: var(--font-serif);
@@ -267,6 +276,54 @@
       background: var(--surface);
     }
     .figure-caption strong { color: var(--text); }
+
+    /* ── Terminal Bench ── */
+    .terminal-bench-section {
+      background: #0a0a0a;
+    }
+
+    .terminal-bench-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .terminal-bench-inner h2 {
+      color: #ffffff;
+    }
+
+    .terminal-prompt {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: #4ade80;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .terminal-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.2em;
+      background: #4ade80;
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .terminal-desc {
+      font-size: 0.97rem;
+      color: #9ca3af;
+      line-height: 1.8;
+      max-width: 540px;
+      margin: 0 auto;
+    }
 
     /* ── Arena ── */
     .arena-header {
@@ -413,6 +470,7 @@
     <a href="#top" class="nav-logo">Hack-Verifiable Environments</a>
     <ul class="nav-links">
       <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#terminal-bench">Hack Verifiable Terminal Bench</a></li>
       <li><a href="#arena">Hack Verifiable Text Arena</a></li>
       <li><a href="#cite">Cite</a></li>
     </ul>
@@ -441,10 +499,10 @@
     </div>
 
     <div class="authors">
-      <a href="https://majoroth.github.io">Amit Roth</a><sup>1</sup><span class="sep">·</span>
-      <a href="https://www.linkedin.com/in/ankursamanta/">Ankur Samanta</a><sup>2</sup><span class="sep">·</span>
-      <a href="https://www.linkedin.com/in/mhalevy/">Matan Halevy</a><sup>3</sup><span class="sep">·</span>
-      <a href="https://www.linkedin.com/in/yoav-levine-b65011237/">Yoav Levine</a><sup>1</sup><span class="sep">·</span>
+      <a href="https://majoroth.github.io">Amit Roth</a><sup>1</sup><span class="sep">&middot;</span>
+      <a href="https://www.linkedin.com/in/ankursamanta/">Ankur Samanta</a><sup>2</sup><span class="sep">&middot;</span>
+      <a href="https://www.linkedin.com/in/mhalevy/">Matan Halevy</a><sup>3</sup><span class="sep">&middot;</span>
+      <a href="https://www.linkedin.com/in/yoav-levine-b65011237/">Yoav Levine</a><sup>1</sup><span class="sep">&middot;</span>
       <a href="https://sites.google.com/view/yonathan-efroni/home">Yonathan Efroni</a><sup>1</sup>
     </div>
     <div class="affiliations">
@@ -489,6 +547,21 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Hack-Verifiable Terminal Bench ── -->
+  <section id="terminal-bench" class="terminal-bench-section">
+    <div class="terminal-bench-inner">
+      <div class="fade-up">
+        <div class="terminal-prompt">$ hack-verifiable-terminal-bench<span class="terminal-cursor"></span></div>
+        <h2>Hack-Verifiable Terminal Bench</h2>
+        <p class="terminal-desc">
+          A benchmark for evaluating reward hacking in terminal-based agentic environments. Coming soon.
+        </p>
+      </div>
     </div>
   </section>
 
