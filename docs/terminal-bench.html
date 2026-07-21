@@ -474,12 +474,27 @@
   <section id="content">
     <div class="section-inner blog-content">
       <div class="fade-up">
-        <p style="color:var(--muted);line-height:1.9;margin-bottom:28px;">We evaluate reward hacking of agents in real-world coding tasks.</p>
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:24px;">As agents grow more autonomous, they increasingly <em>reward hack</em> &mdash; satisfying the designer's intent only superficially, producing code that looks correct but fails in production. Mitigating this starts with measuring it, yet few benchmarks do so reliably. We recently introduced <em>hack-verifiable environments</em>, which embed honeypots into environments to measure hacks reliably and at scale. Here, we apply it to Terminal Bench.</p>
+
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:16px;">The goal of this project is to measure the hack rate of frontier models, and our ability to mitigate it with different approaches. We ask:</p>
+
+        <ul style="color:var(--muted);line-height:1.9;margin-bottom:28px;">
+          <li><strong style="color:#e0e0e0;">(Q1) Alignment.</strong> Do frontier models tend to hack in coding tasks in their default mode?</li>
+          <li><strong style="color:#e0e0e0;">(Q2) Mitigating hacks by prompting.</strong> To what degree can we mitigate hacks through proper guidance in prompts?</li>
+          <li><strong style="color:#e0e0e0;">(Q3) Mitigating through awareness.</strong> When asked via a prompt, are frontier models aware that they performed reward hacking &mdash; and can we exploit that awareness to mitigate hacks?</li>
+        </ul>
         <h2 style="font-style:italic;font-weight:600;color:#e0e0e0;">Hack-Verifiable Environments</h2>
-        <p style="color:var(--text);line-height:1.9;">We append verifiable hacks into RL environments to create an automatic testbed for evaluation of reward hacking. We characterize common reward hacking behaviors and wrap different environments in a generic manner. This approach allows us to study the behavior of agents in various settings and in a reliable manner. See our paper <a href="#ref-hve" class="cite-ref">[1]</a> for the complete details.</p>
+        <p style="color:var(--text);line-height:1.9;">We append verifiable hacks into coding environments to create an automatic testbed for evaluation of reward hacking. We characterize common reward hacking behaviors and wrap different environments in a generic manner. This approach allows us to study the behavior of agents in various settings and in a reliable manner. See our paper <a href="#ref-hve" class="cite-ref">[1]</a> for the complete details.</p>
+
+        <div style="margin-top:32px;border:1px solid var(--border,#2a2a2a);border-radius:8px;overflow:hidden;">
+          <video src="video.mp4" autoplay loop muted playsinline style="width:100%;display:block;"></video>
+          <div style="padding:14px 18px;font-size:0.85rem;color:var(--muted);line-height:1.6;border-top:1px solid var(--border,#2a2a2a);">
+            <strong style="color:var(--text);">Figure 1.</strong> The interaction between the agent and the hack-verifiable environment.
+          </div>
+        </div>
         <h2 style="font-style:italic;font-weight:600;color:#e0e0e0;margin-top:48px;">Applying HVE to Terminal Bench</h2>
 
-        <p>Terminal Bench <a href="#ref-terminal-bench" class="cite-ref">[2]</a> is one of the leading benchmarks to evaluate real-world terminal use and coding capabilities of agents. It has been shown that Terminal Bench can be exploitable by agents <a href="#ref-terminal-wrench" class="cite-ref">[3]</a>. We characterized three common hacks that occur in Terminal Bench and other similar benchmarks:</p>
+        <p>Terminal Bench <a href="#ref-terminal-bench" class="cite-ref">[2]</a> is one of the leading benchmarks to evaluate real-world terminal use and coding capabilities of agents. It has been shown that Terminal Bench can be exploitable by agents <a href="#ref-terminal-wrench" class="cite-ref">[3]</a>. We characterized three common hacks that occur in Terminal Bench and other similar coding benchmarks:</p>
 
         <ol>
           <li><strong>Hidden solution:</strong> <span style="color:var(--muted);font-style:italic;">(Details coming soon)</span></li>
