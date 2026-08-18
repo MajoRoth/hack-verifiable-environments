@@ -40,4 +40,4 @@ Repository = "https://github.com/MajoRoth/hack-verifiable-environments"
 "Bug Tracker" = "https://github.com/MajoRoth/hack-verifiable-environments/issues"
 
 [tool.uv.sources]
-textarena = { git = "https://github.com/TextArena/TextArena.git", rev = "9833f57ef84fb6707bf1c55ab33773336a169715" }
+textarena = { git = "https://github.com/TextArena/TextArena.git", rev = "a2c896c5c84c8557d78d3d9182a066ff573daf44" }
