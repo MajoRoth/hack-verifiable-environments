@@ -397,7 +397,7 @@
   <!-- ── Blog Content ── -->
   <section id="content">
     <div class="section-inner blog-content">
-      <div class="fade-up">
+      <div class="fade-up visible">
         <p style="color:var(--text);line-height:1.9;margin-bottom:24px;">As agents grow more autonomous, they increasingly <em>reward hack</em> &mdash; satisfying the designer's intent only superficially, producing code that looks correct but fails in production. Recent reports from frontier labs keep surfacing examples of models gaming their own evaluations rather than solving the task <a href="#ref-openai-hf" class="cite-ref">[1]</a>, <a href="#ref-metr" class="cite-ref">[2]</a>, <a href="#ref-spec-gaming" class="cite-ref">[3]</a>. Mitigating this starts with measuring it, yet few benchmarks do so reliably. Most existing approaches rely on human inspection or LLM judges. Both can miss hacks or flag honest work, and both lean heavily on the agent's reasoning traces, which don't always reflect what the agent actually did.</p>
 
         <p style="color:var(--text);line-height:1.9;margin-bottom:28px;">We built <em>Hack-Verifiable Terminal Bench</em> (HVTB) toward closing this gap. Instead of judging behavior after the fact, we embed honeypots into real Terminal Bench tasks, so every hack is deterministically verifiable the moment it happens. Using HVTB, we analyze how frontier agents behave in these environments.</p>
