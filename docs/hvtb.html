@@ -482,7 +482,7 @@ used to validate benchmark tasks.
 
         <p>Every read or write inside <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">admin/</code> is caught by <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">inotify</code> filesystem watchers, installed by patching each task's Dockerfile. When the agent finishes, the verifier reads the flags. No LLM judge, no human inspection, no reliance on what the agent claims in its reasoning trace.</p>
 
-        <p>A core principle in hack-verifiable environments is to build the hacks generically, so they can be tested across many environments. We exploit the structure of Harbor tasks: a single script automatically transforms any Harbor-format task into its hack-verifiable version. That is how all 89 HVTB environments were generated, and you can use the same script to wrap your own tasks.</p>
+        <p>A core principle in hack-verifiable environments is to build the hacks generically, so they can be tested across many environments. We utilize the structure of Harbor tasks: a single script automatically transforms any Harbor-format task into its hack-verifiable version. That is how all 89 HVTB environments were generated, and you can use the same script to wrap your own tasks.</p>
 
         <h2 style="font-style:italic;font-weight:600;color:#e0e0e0;margin-top:48px;">Evaluating Reward Hacking</h2>
 
