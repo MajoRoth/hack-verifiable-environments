@@ -577,11 +577,41 @@ used to validate benchmark tasks.
             <div class="bib-authors"><span style="color:var(--muted);font-style:italic;">Citation details coming soon</span></div>
           </div>
         </div>
+
+        <div style="margin-top:48px;">
+          <h2>Citation</h2>
+          <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">If you use HVTB in your research, please cite:</p>
+          <div class="code-window">
+            <div class="code-window-header" style="justify-content:space-between;">
+              <span>BibTeX</span>
+              <button id="copy-cite-btn" onclick="copyCitation()" style="background:transparent;border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 12px;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:var(--mono);transition:all .15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">Copy</button>
+            </div>
+            <pre id="citation-text">@article{roth2026hackverifiable,
+  title={Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks},
+  author={Roth, Amit and Bercovich, Ivan and Efroni, Yonathan},
+  journal={arXiv preprint},
+  year={2026}
+}</pre>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <footer style="border-top:1px solid var(--border);margin-top:64px;padding:32px 24px;text-align:center;">
+    <div style="font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Written by</div>
+    <div style="font-size:0.92rem;color:var(--text);">Amit Roth, Ivan Bercovich, Yonathan Efroni</div>
+  </footer>
+
   <script>
+    function copyCitation() {
+      const btn = document.getElementById('copy-cite-btn');
+      navigator.clipboard.writeText(document.getElementById('citation-text').textContent).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
+      });
+    }
+
     function toggleReadme() {
       const el = document.getElementById('readme-content');
       const ch = document.getElementById('readme-chevron');
