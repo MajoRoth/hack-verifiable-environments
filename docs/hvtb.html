@@ -298,6 +298,10 @@
       background: var(--surface);
       padding: 20px;
       margin: 24px 0 8px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1020px, calc(100vw - 48px));
     }
     .hvtb-legend {
       display: flex;
@@ -354,131 +358,6 @@
     .hvtb-fig.focused .legend-item { opacity: 0.4; }
     .hvtb-fig.focused .legend-item.active { opacity: 1; }
 
-    /* ── Floating Terminal Animation ── */
-    .floating-terminal-container {
-      position: fixed;
-      left: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 220px;
-      height: 180px;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    .floating-terminal {
-      width: 100%;
-      height: 100%;
-      background: rgba(20, 20, 20, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(74, 222, 128, 0.2);
-      border-radius: 16px;
-      transform: perspective(800px) rotateY(12deg) rotateX(-3deg) rotateZ(-2deg);
-      box-shadow:
-        0 0 40px rgba(74, 222, 128, 0.08),
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      animation: terminal-float 6s ease-in-out infinite;
-    }
-
-    @keyframes terminal-float {
-      0%, 100% { transform: perspective(800px) rotateY(12deg) rotateX(-3deg) rotateZ(-2deg) translateY(0); }
-      50% { transform: perspective(800px) rotateY(12deg) rotateX(-3deg) rotateZ(-2deg) translateY(-12px); }
-    }
-
-    .floating-terminal-bar {
-      height: 28px;
-      background: rgba(30, 30, 30, 0.8);
-      border-bottom: 1px solid rgba(74, 222, 128, 0.1);
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      gap: 6px;
-    }
-
-    .floating-terminal-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-    .floating-terminal-dot:nth-child(1) { background: #ff5f57; }
-    .floating-terminal-dot:nth-child(2) { background: #ffbd2e; }
-    .floating-terminal-dot:nth-child(3) { background: #28c840; }
-
-    .floating-terminal-body {
-      padding: 14px;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      line-height: 1.8;
-      color: var(--accent);
-      opacity: 0.7;
-    }
-
-    .floating-terminal-body .line {
-      opacity: 0;
-      animation: type-line 0.3s forwards;
-    }
-    .floating-terminal-body .line:nth-child(1) { animation-delay: 0.5s; }
-    .floating-terminal-body .line:nth-child(2) { animation-delay: 1.2s; }
-    .floating-terminal-body .line:nth-child(3) { animation-delay: 1.9s; }
-    .floating-terminal-body .line:nth-child(4) { animation-delay: 2.6s; }
-    .floating-terminal-body .line:nth-child(5) { animation-delay: 3.3s; }
-    .floating-terminal-body .line:nth-child(6) { animation-delay: 4.0s; }
-    .floating-terminal-body .line:nth-child(7) { animation-delay: 4.7s; }
-    .floating-terminal-body .line:nth-child(8) { animation-delay: 5.4s; }
-
-    @keyframes type-line {
-      to { opacity: 1; }
-    }
-
-    .floating-terminal-body .cmd { color: #e0e0e0; }
-    .floating-terminal-body .warn { color: #f59e0b; }
-    .floating-terminal-body .err { color: #ef4444; }
-
-    /* ── AI Shadow Blobs ── */
-    .ai-blob {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      filter: blur(30px);
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .ai-blob-green {
-      background: radial-gradient(circle, rgba(74, 222, 128, 0.8), transparent 70%);
-      animation: blob-orbit-green 8s ease-in-out infinite;
-      z-index: 11;
-    }
-
-    .ai-blob-purple {
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.8), transparent 70%);
-      animation: blob-orbit-purple 10s ease-in-out infinite;
-      z-index: 9;
-    }
-
-    @keyframes blob-orbit-green {
-      0%   { top: 15%; left: 70%; opacity: 0.6; transform: scale(1); }
-      25%  { top: -10%; left: 40%; opacity: 0.4; transform: scale(1.2); }
-      50%  { top: 20%; left: 10%; opacity: 0.7; transform: scale(0.8); z-index: 11; }
-      75%  { top: 70%; left: 50%; opacity: 0.3; transform: scale(1.1); z-index: 9; }
-      100% { top: 15%; left: 70%; opacity: 0.6; transform: scale(1); }
-    }
-
-    @keyframes blob-orbit-purple {
-      0%   { top: 70%; left: 20%; opacity: 0.5; transform: scale(1); }
-      25%  { top: 90%; left: 60%; opacity: 0.3; transform: scale(1.3); z-index: 11; }
-      50%  { top: 60%; left: 80%; opacity: 0.6; transform: scale(0.9); }
-      75%  { top: 10%; left: 30%; opacity: 0.4; transform: scale(1.1); z-index: 9; }
-      100% { top: 70%; left: 20%; opacity: 0.5; transform: scale(1); }
-    }
-
-    @media (max-width: 1200px) {
-      .floating-terminal-container { display: none; }
-    }
-
     /* ── Fade-in ── */
     .fade-up {
       opacity: 0;
@@ -503,20 +382,6 @@
       <li><a href="#content">Blog Post</a></li>
     </ul>
   </nav>
-
-  <!-- ── Floating Terminal Animation ── -->
-  <div class="floating-terminal-container">
-    <div class="ai-blob ai-blob-green"></div>
-    <div class="ai-blob ai-blob-purple"></div>
-    <div class="floating-terminal">
-      <div class="floating-terminal-bar">
-        <div class="floating-terminal-dot"></div>
-        <div class="floating-terminal-dot"></div>
-        <div class="floating-terminal-dot"></div>
-      </div>
-      <div class="floating-terminal-body"></div>
-    </div>
-  </div>
 
   <!-- ── Hero ── -->
   <div id="top" class="hero fade-up visible">
