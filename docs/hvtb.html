@@ -288,8 +288,20 @@
     }
 
     /* ── Collapsible traces ── */
-    .trace-window .code-window-header { cursor: pointer; user-select: none; }
-    .trace-window .code-window-header:hover { color: var(--text); }
+    .trace-window { border-width: 1.5px; }
+    .trace-window .code-window-header {
+      cursor: pointer;
+      user-select: none;
+      padding: 14px 18px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .trace-window .code-window-header:hover {
+      background: #232323;
+      color: var(--text);
+    }
+    .trace-window:has(.code-window-header:hover) { border-color: #4d4d4d; }
     .trace-window .trace-toggle {
       display: inline-block;
       margin-right: 8px;
@@ -762,8 +774,20 @@ the leak, and they're inotify-monitored.</pre>
     }
 
     /* ── Collapsible traces ── */
-    .trace-window .code-window-header { cursor: pointer; user-select: none; }
-    .trace-window .code-window-header:hover { color: var(--text); }
+    .trace-window { border-width: 1.5px; }
+    .trace-window .code-window-header {
+      cursor: pointer;
+      user-select: none;
+      padding: 14px 18px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .trace-window .code-window-header:hover {
+      background: #232323;
+      color: var(--text);
+    }
+    .trace-window:has(.code-window-header:hover) { border-color: #4d4d4d; }
     .trace-window .trace-toggle {
       display: inline-block;
       margin-right: 8px;
