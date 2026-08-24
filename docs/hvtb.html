@@ -773,30 +773,6 @@ the leak, and they're inotify-monitored.</pre>
       ch.innerHTML = open ? '&#9656;' : '&#9662;';
     }
 
-    /* ── Collapsible traces ── */
-    .trace-window { border-width: 1.5px; }
-    .trace-window .code-window-header {
-      cursor: pointer;
-      user-select: none;
-      padding: 14px 18px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      transition: background .15s, color .15s, border-color .15s;
-    }
-    .trace-window .code-window-header:hover {
-      background: #232323;
-      color: var(--text);
-    }
-    .trace-window:has(.code-window-header:hover) { border-color: #4d4d4d; }
-    .trace-window .trace-toggle {
-      display: inline-block;
-      margin-right: 8px;
-      color: var(--accent);
-      transition: transform .2s;
-    }
-    .trace-window.collapsed .trace-toggle { transform: rotate(-90deg); }
-    .trace-window.collapsed pre { display: none; }
-
     /* ── Hack-rate figure ── */
     const HVTB_MODELS = [
       { id: 'claude', name: 'claude-opus-5',  color: '#D97757', values: [30.7, 17.4, 2.3, 1.1, 0.0],
