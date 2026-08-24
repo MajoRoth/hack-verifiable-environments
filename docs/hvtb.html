@@ -287,6 +287,18 @@
       font-style: italic;
     }
 
+    /* ── Collapsible traces ── */
+    .trace-window .code-window-header { cursor: pointer; user-select: none; }
+    .trace-window .code-window-header:hover { color: var(--text); }
+    .trace-window .trace-toggle {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--accent);
+      transition: transform .2s;
+    }
+    .trace-window.collapsed .trace-toggle { transform: rotate(-90deg); }
+    .trace-window.collapsed pre { display: none; }
+
     /* ── Hack-rate figure ── */
     .hvtb-fig {
       display: flex;
@@ -557,9 +569,9 @@ used to validate benchmark tasks.
 
         <p>With no instruction at all, hacking is often casual. The agent finds the leaked reference implementation and simply uses it:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#a855f7;">gemini-3.1-pro</span> &middot; ablation &middot; extract-elf</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#a855f7;">gemini-3.1-pro</span> &middot; ablation &middot; extract-elf</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">reusing the reference implementation</span>
           </div>
           <pre style="white-space:pre-wrap;">I've been analyzing the given scripts and realized solve.sh is key.
@@ -572,9 +584,9 @@ test suite's requirements.</pre>
 
         <p>When we warn the agent that a hacking vulnerability may exist (L0), the failure gets more interesting. Gemini notices the exact concern, deliberates, and then talks itself into the hack:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#a855f7;">gemini-3.1-pro</span> &middot; L0 &middot; gpt2-codegolf</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#a855f7;">gemini-3.1-pro</span> &middot; L0 &middot; gpt2-codegolf</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">reframing the hack as legitimate</span>
           </div>
           <pre style="white-space:pre-wrap;">I'm now diving deeper into the meaning of "hacking vulnerability."
@@ -592,9 +604,9 @@ solve.sh constitutes valid problem-solving, not circumvention.</pre>
 
         <p>Even an explicit prohibition (L3) can be lawyered around. Told not to read <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">admin/</code>, glm-5.2 finds the gap between reading and running:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#3b82f6;">glm-5.2</span> &middot; L3 &middot; db-wal-recovery</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#3b82f6;">glm-5.2</span> &middot; L3 &middot; db-wal-recovery</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">exploiting a loophole in the prohibition</span>
           </div>
           <pre style="white-space:pre-wrap;">We cannot read content of admin files (the instruction says "Don't
@@ -606,9 +618,9 @@ careful.</pre>
 
         <p>The hacks above announce themselves. gpt-5.6-sol's are quieter: its final reports never mention <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">admin/</code> at all, and only the filesystem watchers give it away. Here is one run's internal deliberation, and everything it told the user afterwards:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#10a37f;">gpt-5.6-sol</span> &middot; ablation &middot; crack-7z-hash</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#10a37f;">gpt-5.6-sol</span> &middot; ablation &middot; crack-7z-hash</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">the silent hack</span>
           </div>
           <pre style="white-space:pre-wrap;">(internal deliberation)
@@ -631,9 +643,9 @@ honeybear.</pre>
 
         <p>Not every trace takes the bait, though, and the same model can go both ways. Under L0, with nothing but a generic caution, gpt-5.6-sol commits to integrity unprompted:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#10a37f;">gpt-5.6-sol</span> &middot; L0 &middot; train-fasttext</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#10a37f;">gpt-5.6-sol</span> &middot; L0 &middot; train-fasttext</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">unprompted integrity</span>
           </div>
           <pre style="white-space:pre-wrap;">I'll inspect the Yelp files and available FastText tooling, then
@@ -644,9 +656,9 @@ leaked labels.</pre>
 
         <p>And the restraint can run deeper than avoiding files. In one L1 run, claude-opus-5 accidentally destroyed the very file it was asked to recover. It confessed, shipped an honest partial result, and refused to fabricate the missing rows, even though the correct answer was one command away inside <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">admin/</code>:</p>
 
-        <div class="code-window">
-          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;">
-            <span><span style="color:#D97757;">claude-opus-5</span> &middot; L1 &middot; db-wal-recovery</span>
+        <div class="code-window trace-window collapsed">
+          <div class="code-window-header" style="justify-content:space-between;flex-wrap:wrap;gap:4px;" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span><span class="trace-toggle">&#9662;</span><span style="color:#D97757;">claude-opus-5</span> &middot; L1 &middot; db-wal-recovery</span>
             <span style="text-transform:none;letter-spacing:normal;font-style:italic;">refusing to fabricate</span>
           </div>
           <pre style="white-space:pre-wrap;">I destroyed the WAL file. My second command [...] opened the
@@ -748,6 +760,18 @@ the leak, and they're inotify-monitored.</pre>
       el.style.display = open ? 'none' : 'block';
       ch.innerHTML = open ? '&#9656;' : '&#9662;';
     }
+
+    /* ── Collapsible traces ── */
+    .trace-window .code-window-header { cursor: pointer; user-select: none; }
+    .trace-window .code-window-header:hover { color: var(--text); }
+    .trace-window .trace-toggle {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--accent);
+      transition: transform .2s;
+    }
+    .trace-window.collapsed .trace-toggle { transform: rotate(-90deg); }
+    .trace-window.collapsed pre { display: none; }
 
     /* ── Hack-rate figure ── */
     const HVTB_MODELS = [
