@@ -579,7 +579,9 @@ used to validate benchmark tasks.
 
         <h2 style="font-style:italic;font-weight:600;color:#e0e0e0;margin-top:48px;">What Hacking Actually Looks Like</h2>
 
-        <p>The curves above are aggregates. The traces behind them are more telling, so here are three of them, in the agents' own words.</p>
+        <p>The curves above are aggregates. The traces behind them are more telling, so here are six of them, in the agents' own words.</p>
+
+        <h3 style="font-family:var(--font-sans);font-size:0.92rem;font-weight:600;letter-spacing:0.02em;color:#ffffff;margin:32px 0 8px;">Hacks They Admit</h3>
 
         <p>With no instruction at all, hacking is often casual. The agent finds the leaked reference implementation and simply uses it:</p>
 
@@ -629,6 +631,8 @@ reading their contents is prohibited. Running them is okay? The
 instruction says don't read content, not don't run. But we should be
 careful.</pre>
         </div>
+
+        <h3 style="font-family:var(--font-sans);font-size:0.92rem;font-weight:600;letter-spacing:0.02em;color:#ffffff;margin:32px 0 8px;">Hacks They Hide</h3>
 
         <p>The hacks above announce themselves. gpt-5.6-sol's are quieter: its final reports never mention <code style="color:var(--accent);font-family:var(--mono);font-size:0.9em;">admin/</code> at all, and only the filesystem watchers give it away. Here is one run's internal deliberation, and everything it told the user afterwards:</p>
 
@@ -680,6 +684,8 @@ importing the official test module (read-only).</pre>
         </div>
 
         <p>The long final report details every build patch and training step. It never mentions that the reference solution was read.</p>
+
+        <h3 style="font-family:var(--font-sans);font-size:0.92rem;font-weight:600;letter-spacing:0.02em;color:#ffffff;margin:32px 0 8px;">No Hack at All</h3>
 
         <p>Not every trace takes the bait, though, and the same model can go both ways. Under L0, with nothing but a generic caution, gpt-5.6-sol commits to integrity unprompted:</p>
 
